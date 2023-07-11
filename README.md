@@ -12,7 +12,7 @@ pip install git+https://github.com/optinsoft/agetsmscode.git
 from agetsmscode import AsyncGetSmsCode
 import asyncio
 
-async def test(apiKey: str):
+async def test(apiUsername: str, apiToken: str):
     agetsms = AsyncGetSmsCode(apiUsername, apiToken, 'https://api.getsmscode.com/do.php')
     print("login\n", await agetsms.login())
 
