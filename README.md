@@ -18,5 +18,5 @@ async def test(apiUsername: str, apiToken: str):
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(test('PUT_YOUR_API_KEY_HERE'))
+    loop.run_until_complete(test('PUT_YOUR_API_USERNAME_HERE', 'PUT_YOUR_API_TOKEN_HERE'))
 ```
