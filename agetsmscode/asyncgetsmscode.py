@@ -64,16 +64,16 @@ class AsyncGetSmsCode:
         url = self.endpoint + '?' + urlencode({'action': 'login', 'username': self.username, 'token': self.token})
         return await self.doRequest(url, ['username', 'balance', 'points', 'discount_rate', 'api_thread'])
     
-    async def getNumber(self, pid: str, removevr: str = '0'):
-        url = self.endpoint + '?' + urlencode({'action': 'getmobile', 'username': self.username, 'token': self.token, 'pid': pid, 'removevr': removevr})
+    async def getNumber(self, pid: str, cocode: str = '', removevr: str = '0'):
+        url = self.endpoint + '?' + urlencode({'action': 'getmobile', 'username': self.username, 'token': self.token, 'pid': pid, 'cocode': cocode, 'removevr': removevr})
         return await self.doRequest(url, ['number'])
 
-    async def getSMS(self, pid: str, number: str, author: str = ''):
-        url = self.endpoint + '?' + urlencode({'action': 'getsms', 'username': self.username, 'token': self.token, 'pid': pid, 'mobile': number, 'author': author})
+    async def getSMS(self, pid: str, number: str, cocode: str = '', author: str = ''):
+        url = self.endpoint + '?' + urlencode({'action': 'getsms', 'username': self.username, 'token': self.token, 'pid': pid, 'mobile': number, 'cocode': cocode, 'author': author})
         return await self.doRequest(url, ['code','sms'])
 
-    async def addBlack(self, pid: str, number: str):
-        url = self.endpoint + '?' + urlencode({'action': 'addblack', 'username': self.username, 'token': self.token, 'pid': pid, 'mobile': number})
+    async def addBlack(self, pid: str, number: str, cocode: str = ''):
+        url = self.endpoint + '?' + urlencode({'action': 'addblack', 'username': self.username, 'token': self.token, 'pid': pid, 'mobile': number, 'cocode': cocode})
         return await self.doRequest(url, ['message','text'])
 
     async def mobileList(self):

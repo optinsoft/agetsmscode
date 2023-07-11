@@ -13,7 +13,7 @@ async def testApi(apiName: str, apiRoutine: Coroutine):
         print("AsyncGetSmsCodeException:", e)
     return None
 
-async def testAsyncGetSmsCode(username: str, token: str, endpoint: str = 'https://api.getsmscode.com/do.php'):
+async def testAsyncGetSmsCode(username: str, token: str, endpoint: str = 'https://api.getsmscode.com/do.php', cocode: str = ''):
     agetsms = AsyncGetSmsCode(username, token, endpoint)
 
     print('--- agetsmscode ---')
@@ -21,11 +21,11 @@ async def testAsyncGetSmsCode(username: str, token: str, endpoint: str = 'https:
     await testApi('login', agetsms.login())
     await testApi('projectList', agetsms.projectList())
     await testApi('mobileList', agetsms.mobileList())
-    number = await testApi('getNumber', agetsms.getNumber('1'))
+    pid = '1'
+    number = await testApi('getNumber', agetsms.getNumber(pid, cocode))
     if number:
-        print(number)    
         await testApi('mobileList', agetsms.mobileList())
-        await testApi('getSMS', agetsms.getSMS('1', number['number']))
-        await testApi('addBlack', agetsms.addBlack('1', number['number']))
+        await testApi('getSMS', agetsms.getSMS(pid, number['number'], cocode))
+        await testApi('addBlack', agetsms.addBlack(pid, number['number'], cocode))
 
     print('--- agetsmscode test completed ---')
