@@ -40,24 +40,25 @@ class AsyncGetSmsCode:
                         if len(respText) > 0:
                             x = respText.split(respDelimiter)
                             for t in x:
-                                respValues = t.split('|')
-                                if len(sublistName) > 0 and len(respValues) >= len(respNames):
-                                    sublistValues = respValues[len(respNames)-1:]
-                                    respValues = respValues[:len(respNames)-1]
-                                    respValues.append(sublistValues)
-                                else:
-                                    sublistValues = None
-                                if len(respValues) != len(respNames):
-                                    return False
-                                respObj.append({name: respValues[i] for i, name in enumerate(respNames)})
+                                if len(t) > 0:
+                                    respValues = t.split('|')
+                                    if len(sublistName) > 0 and len(respValues) >= len(respNames):
+                                        sublistValues = respValues[len(respNames)-1:]
+                                        respValues = respValues[:len(respNames)-1]
+                                        respValues.append(sublistValues)
+                                    else:
+                                        sublistValues = None
+                                    if len(respValues) != len(respNames):
+                                        raise AsyncGetSmsCodeException(f"Bad response: {respText}")
+                                    respObj.append({name: respValues[i] for i, name in enumerate(respNames)})
                     else:
                         respValues = respText.split('|')
                         if len(respValues) != len(respNames):
-                            return False
+                            raise AsyncGetSmsCodeException(f"Bad response: {respText}")
                         respObj = {name: respValues[i] for i, name in enumerate(respNames)}
                     respJson = respObj
-                except ValueError:
-                    return False
+                except ValueError as e:
+                    raise AsyncGetSmsCodeException(f"Request failed: {str(e)}")
                 return self.checkResponse(respJson)
 
     async def login(self):
@@ -82,5 +83,5 @@ class AsyncGetSmsCode:
 
     async def projectList(self):
         url = 'http://api.getsmscode.com/projectapi.php'
-        return await self.doRequest(url, ['pid', 'project_name', '...cc_price'], '\n')
+        return await self.doRequest(url, ['pid', 'project_name', '...cc_price'], '<br>')
     
