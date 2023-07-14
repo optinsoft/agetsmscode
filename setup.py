@@ -1,7 +1,7 @@
 from distutils.core import setup
 
 setup(name='agetsmscode',
-    version='1.0',
+    version='1.1',
     description='Async API wrapper for getsmscode',
     install_requires=["aiohttp","certifi"],
     author='optinsoft',
