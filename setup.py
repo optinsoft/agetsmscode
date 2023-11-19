@@ -1,7 +1,11 @@
 from distutils.core import setup
+import re
+
+s = open('agetsmscode/version.py').read()
+v = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", s, re.M).group(1)
 
 setup(name='agetsmscode',
-    version='1.1',
+    version=v,
     description='Async API wrapper for getsmscode',
     install_requires=["aiohttp","certifi"],
     author='optinsoft',

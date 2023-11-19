@@ -81,7 +81,8 @@ class AsyncGetSmsCode:
         url = self.endpoint + '?' + urlencode({'action': 'mobilelist', 'username': self.username, 'token': self.token})
         return await self.doRequest(url, ['mobile', 'pid'], ',')
 
-    async def projectList(self):
+    async def projectList(self, pid: str=''):
         url = 'http://api.getsmscode.com/projectapi.php'
+        if len(pid) > 0: url = url + '? ' + urlencode({'pid': pid})
         return await self.doRequest(url, ['pid', 'project_name', '...cc_price'], '<br>')
     
